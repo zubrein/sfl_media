@@ -1,0 +1,35 @@
+name: sfl_media
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  youtube_player_iframe: 2.3.0
+  inview_notifier_list:
+  gap:
+  flutter_launcher_icons:
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo_sfl.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
