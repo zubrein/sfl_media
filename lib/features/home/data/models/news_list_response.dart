@@ -9,9 +9,9 @@ part 'news_list_response.g.dart';
 @JsonSerializable()
 class NewsListResponse extends BaseModel {
   @JsonKey(defaultValue: [])
-  final List<NewsResponse> newsList;
+  final List<NewsResponse> list;
 
-  NewsListResponse(this.newsList);
+  NewsListResponse(this.list);
 
   factory NewsListResponse.fromJson(JsonMap json) {
     return _$NewsListResponseFromJson(json);

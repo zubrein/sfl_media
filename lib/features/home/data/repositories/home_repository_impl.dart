@@ -20,7 +20,7 @@ class HomeRepositoryImpl extends HomeRepository {
     final response = await newsApi.get(parameters: {'categories=': categoryId});
 
     return response.fold((result) {
-      for (var news in result.newsList) {
+      for (var news in result.list) {
         newsList.add(
           News(
             title: news.title.rendered ?? '',

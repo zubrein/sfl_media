@@ -19,7 +19,7 @@ abstract class BaseApi<TRes extends BaseModel> {
         queryParameters: parameters,
       );
       if (response.data is List) {
-        response.data = {'newsList': response.data};
+        response.data = {'list': response.data};
       }
       return Left(mapResponse(response.data));
     } on DioException catch (error, stackTrace) {
