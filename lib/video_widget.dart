@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sfl_media/details_page.dart';
-import 'package:sfl_media/news_item.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+
+import 'features/home/domain/entities/news.dart';
 
 class VideoWidget extends StatefulWidget {
   final bool isInView;
-  final NewsItem newsItem;
+  final News news;
   final int index;
 
   const VideoWidget({
     Key? key,
     required this.isInView,
     required this.index,
-    required this.newsItem,
+    required this.news,
   }) : super(key: key);
 
   @override
@@ -28,7 +29,7 @@ class _MyVideoWidgetState extends State<VideoWidget> {
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayerController.convertUrlToId(
-              widget.newsItem.videoUrl ?? '') ??
+              widget.news.videoUrl ?? '') ??
           '',
       params: const YoutubePlayerParams(
         showFullscreenButton: true,
@@ -55,7 +56,7 @@ class _MyVideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.newsItem.videoUrl != null) {
+    if (widget.news.videoUrl != null) {
       widget.isInView ? _controller.play() : _controller.stop();
     }
     return Card(
@@ -79,7 +80,7 @@ class _MyVideoWidgetState extends State<VideoWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        widget.newsItem.title,
+        widget.news.title,
         style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,
@@ -93,7 +94,7 @@ class _MyVideoWidgetState extends State<VideoWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        widget.newsItem.description,
+        widget.news.description,
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
@@ -109,7 +110,7 @@ class _MyVideoWidgetState extends State<VideoWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        '${widget.newsItem.author} | ${widget.newsItem.date}',
+        '${widget.news.author} | ${widget.news.date}',
         style: const TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
@@ -120,12 +121,12 @@ class _MyVideoWidgetState extends State<VideoWidget> {
   }
 
   Widget _buildVideoPlayer() {
-    if (widget.newsItem.videoUrl != null) {
+    if (widget.news.videoUrl != null) {
       return YoutubePlayerIFrame(
         controller: _controller,
       );
     } else {
-      return Image.network(widget.newsItem.thumbnailImage);
+      return Image.network(widget.news.thumbnailImage);
     }
   }
 
@@ -137,7 +138,7 @@ class _MyVideoWidgetState extends State<VideoWidget> {
             context,
             MaterialPageRoute(
                 builder: (context) => DetailsPage(
-                      newsItem: widget.newsItem,
+                      news: widget.news,
                     )));
       },
       child: Center(

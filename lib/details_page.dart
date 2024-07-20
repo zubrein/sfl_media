@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sfl_media/news_item.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-class DetailsPage extends StatefulWidget {
-  final NewsItem newsItem;
+import 'features/home/domain/entities/news.dart';
 
-  const DetailsPage({super.key, required this.newsItem});
+class DetailsPage extends StatefulWidget {
+  final News news;
+
+  const DetailsPage({super.key, required this.news});
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -20,7 +21,7 @@ class _DetailsPageState extends State<DetailsPage> {
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayerController.convertUrlToId(
-              widget.newsItem.videoUrl ?? '') ??
+              widget.news.videoUrl ?? '') ??
           '',
       params: const YoutubePlayerParams(
         showFullscreenButton: true,
@@ -85,12 +86,12 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Widget _buildVideoPlayer() {
-    if (widget.newsItem.videoUrl != null) {
+    if (widget.news.videoUrl != null) {
       return YoutubePlayerIFrame(
         controller: _controller,
       );
     } else {
-      return Image.network(widget.newsItem.thumbnailImage);
+      return Image.network(widget.news.thumbnailImage);
     }
   }
 
@@ -98,7 +99,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        widget.newsItem.title,
+        widget.news.title,
         style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w700,
@@ -109,11 +110,11 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Widget _buildSubTitle() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Text(
-        widget.newsItem.subTitle,
-        style: const TextStyle(
+        '',
+        style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,
           color: Colors.black,
@@ -126,7 +127,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        widget.newsItem.description,
+        widget.news.description,
         style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w400,
@@ -140,7 +141,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        '${widget.newsItem.author} | ${widget.newsItem.date}',
+        '${widget.news.author} | ${widget.news.date}',
         style: const TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,

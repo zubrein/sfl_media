@@ -16,12 +16,27 @@ dependencies:
   inview_notifier_list:
   gap:
   flutter_launcher_icons:
+  injectable:
+  equatable: ^2.0.0
+  get_it:
+  logger: ^2.0.2+1
+  bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
+  share_plus: ^7.2.1
+  intl: ^0.18.1
+  url_launcher: ^6.2.4
+  dio:
+  dartz:
+  json_annotation: ^4.9.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  injectable_generator:
+  build_runner:
+  json_serializable: 6.8.0
 
 flutter_launcher_icons:
   android: true

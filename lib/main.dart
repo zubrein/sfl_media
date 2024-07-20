@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'core/di/dependency_initializer.dart';
+import 'core/logger.dart';
+import 'features/home/ui/home.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
+  Log.init();
   runApp(const MyApp());
 }
 
