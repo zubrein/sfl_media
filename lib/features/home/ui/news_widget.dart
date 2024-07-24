@@ -33,9 +33,9 @@ class _MyVideoWidgetState extends State<NewsWidget> {
       initialVideoId:
           YoutubePlayerController.convertUrlToId(widget.news.videoUrl ?? '') ??
               '',
-      params: const YoutubePlayerParams(
+      params: YoutubePlayerParams(
         showFullscreenButton: true,
-        autoPlay: false,
+        autoPlay: widget.index == 0 ? true : false,
         showControls: true,
         desktopMode: false,
         privacyEnhanced: true,
@@ -61,6 +61,7 @@ class _MyVideoWidgetState extends State<NewsWidget> {
     if (widget.news.videoUrl != null) {
       widget.isInView ? _controller.play() : _controller.stop();
     }
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
