@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
-import 'package:sfl_media/core/logger.dart';
 import 'package:sfl_media/core/network/constants/constants.dart';
 import 'package:sfl_media/core/network/constants/typedefs.dart';
 import 'package:sfl_media/features/home/data/api/news_api.dart';
@@ -18,16 +17,14 @@ class HomeRepositoryImpl extends HomeRepository {
   AsyncResult<List<News>> fetchNews(String categoryId) async {
     List<News> newsList = [];
     final response = await newsApi.get(parameters: {'categories=': categoryId});
-    const image =
-        'https://sfl.media/wp-content/uploads/2024/07/2024-european-championships-round-of-16-3592df36-7075-46b7-aeae-77901ec71c19.jpeg';
+
     return response.fold((result) {
       for (var news in result.list) {
-        Log.info(extractYouTubeUrl(news.content.rendered ?? '') ?? '');
         newsList.add(
           News(
               title: news.title.rendered ?? '',
               description: Bidi.stripHtmlIfNeeded(news.content.rendered ?? ''),
-              thumbnailImage: image,
+              thumbnailImage: news.jetpack_featured_media_url,
               author: news.author.toString(),
               date: news.date,
               videoUrl: extractYouTubeUrl(news.content.rendered ?? '')),

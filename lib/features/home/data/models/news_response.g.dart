@@ -13,6 +13,7 @@ NewsResponse _$NewsResponseFromJson(Map<String, dynamic> json) => NewsResponse(
       Title.fromJson(json['title'] as Map<String, dynamic>),
       (json['author'] as num).toInt(),
       Content.fromJson(json['content'] as Map<String, dynamic>),
+      json['jetpack_featured_media_url'] as String,
     );
 
 Map<String, dynamic> _$NewsResponseToJson(NewsResponse instance) =>
@@ -21,6 +22,7 @@ Map<String, dynamic> _$NewsResponseToJson(NewsResponse instance) =>
       'author': instance.author,
       'date': instance.date,
       'title': instance.title,
+      'jetpack_featured_media_url': instance.jetpack_featured_media_url,
       'content': instance.content,
       'link': instance.link,
     };

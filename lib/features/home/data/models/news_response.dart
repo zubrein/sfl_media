@@ -10,6 +10,7 @@ class NewsResponse extends BaseModel {
   final int author;
   final String date;
   final Title title;
+  final String jetpack_featured_media_url;
   final Content content;
   final String link;
 
@@ -19,7 +20,7 @@ class NewsResponse extends BaseModel {
     this.link,
     this.title,
     this.author,
-    this.content,
+    this.content, this.jetpack_featured_media_url,
   );
 
   factory NewsResponse.fromJson(JsonMap json) {

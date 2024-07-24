@@ -5,6 +5,7 @@ import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:sfl_media/category_page.dart';
 import 'package:sfl_media/core/di/dependency_initializer.dart';
 import 'package:sfl_media/features/home/ui/cubit/home_cubit.dart';
+import 'package:sfl_media/utils/shimmer_widget.dart';
 import 'package:sfl_media/video_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,9 +48,6 @@ class _HomePageState extends State<HomePage> {
         body: BlocConsumer<HomeCubit, HomeState>(
           bloc: _homeCubit,
           listener: (context, state) {},
-          // buildWhen: (state, _) {
-          //   return state is NewsFetchSuccessState;
-          // },
           builder: (context, state) {
             return state is NewsFetchSuccessState
                 ? SafeArea(
@@ -73,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     },
                   ))
-                : const SizedBox();
+                : ShimmerWidget.shimmerListWidget();
           },
         ));
   }

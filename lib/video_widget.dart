@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sfl_media/details_page.dart';
+import 'package:sfl_media/utils/shimmer_widget.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import 'features/home/domain/entities/news.dart';
@@ -28,9 +30,9 @@ class _MyVideoWidgetState extends State<VideoWidget> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayerController.convertUrlToId(
-              widget.news.videoUrl ?? '') ??
-          '',
+      initialVideoId:
+          YoutubePlayerController.convertUrlToId(widget.news.videoUrl ?? '') ??
+              '',
       params: const YoutubePlayerParams(
         showFullscreenButton: true,
         autoPlay: false,
@@ -126,7 +128,14 @@ class _MyVideoWidgetState extends State<VideoWidget> {
         controller: _controller,
       );
     } else {
-      return Image.network(widget.news.thumbnailImage);
+      return CachedNetworkImage(
+        height: 170,
+        width: double.infinity,
+        fit: BoxFit.fitWidth,
+        imageUrl: widget.news.thumbnailImage,
+        placeholder: (context, url) => ShimmerWidget.buildBox(170),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      );
     }
   }
 
