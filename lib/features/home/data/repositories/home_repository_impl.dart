@@ -6,6 +6,7 @@ import 'package:sfl_media/features/home/data/api/news_api.dart';
 import 'package:sfl_media/features/home/data/models/news_model.dart';
 import 'package:sfl_media/features/home/domain/entities/news.dart';
 import 'package:sfl_media/features/home/domain/repositories/home_repository.dart';
+import 'package:sfl_media/utils/author_list.dart';
 
 @Injectable(as: HomeRepository)
 class HomeRepositoryImpl extends HomeRepository {
@@ -28,7 +29,7 @@ class HomeRepositoryImpl extends HomeRepository {
             subTitle: newsData.subTitle,
             description: newsData.description,
             thumbnailImage: news.jetpack_featured_media_url,
-            author: news.author.toString(),
+            author: authors[news.author] ?? '',
             date: news.date,
             videoUrl: newsData.videoUrl,
           ),
