@@ -6,7 +6,7 @@ import 'package:sfl_media/category_page.dart';
 import 'package:sfl_media/core/di/dependency_initializer.dart';
 import 'package:sfl_media/features/home/ui/cubit/home_cubit.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
-import 'package:sfl_media/video_widget.dart';
+import 'package:sfl_media/features/home/ui/news_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                         id: index.toString(),
                         builder: (BuildContext context, bool isInView,
                             Widget? child) {
-                          return VideoWidget(
+                          return NewsWidget(
                             news: state.newsList[index],
                             index: index,
                             isInView: isInView,

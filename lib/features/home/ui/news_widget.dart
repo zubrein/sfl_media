@@ -5,14 +5,14 @@ import 'package:sfl_media/details_page.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-import 'features/home/domain/entities/news.dart';
+import '../domain/entities/news.dart';
 
-class VideoWidget extends StatefulWidget {
+class NewsWidget extends StatefulWidget {
   final bool isInView;
   final News news;
   final int index;
 
-  const VideoWidget({
+  const NewsWidget({
     Key? key,
     required this.isInView,
     required this.index,
@@ -20,10 +20,10 @@ class VideoWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<VideoWidget> createState() => _MyVideoWidgetState();
+  State<NewsWidget> createState() => _MyVideoWidgetState();
 }
 
-class _MyVideoWidgetState extends State<VideoWidget> {
+class _MyVideoWidgetState extends State<NewsWidget> {
   late YoutubePlayerController _controller;
 
   @override
