@@ -1,5 +1,6 @@
 class News {
   final String title;
+  final String subTitle;
   final String description;
   final String thumbnailImage;
   final String author;
@@ -8,6 +9,7 @@ class News {
 
   News({
     required this.title,
+    required this.subTitle,
     required this.description,
     required this.thumbnailImage,
     required this.author,
@@ -17,6 +19,7 @@ class News {
 
   News copyWith({
     String? title,
+    String? subTitle,
     String? description,
     String? thumbnailImage,
     String? author,
@@ -25,6 +28,7 @@ class News {
   }) {
     return News(
         title: title ?? this.title,
+        subTitle: subTitle ?? this.subTitle,
         description: description ?? this.description,
         thumbnailImage: thumbnailImage ?? this.thumbnailImage,
         author: author ?? this.author,

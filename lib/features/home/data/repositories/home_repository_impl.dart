@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:intl/intl.dart';
 import 'package:sfl_media/core/network/constants/constants.dart';
 import 'package:sfl_media/core/network/constants/typedefs.dart';
 import 'package:sfl_media/features/home/data/api/news_api.dart';
+import 'package:sfl_media/features/home/data/models/news_model.dart';
 import 'package:sfl_media/features/home/domain/entities/news.dart';
 import 'package:sfl_media/features/home/domain/repositories/home_repository.dart';
 
@@ -20,14 +20,18 @@ class HomeRepositoryImpl extends HomeRepository {
 
     return response.fold((result) {
       for (var news in result.list) {
+        final newsData = NewsModel.processData(news.content.rendered ?? '');
+
         newsList.add(
           News(
-              title: news.title.rendered ?? '',
-              description: Bidi.stripHtmlIfNeeded(news.content.rendered ?? ''),
-              thumbnailImage: news.jetpack_featured_media_url,
-              author: news.author.toString(),
-              date: news.date,
-              videoUrl: extractYouTubeUrl(news.content.rendered ?? '')),
+            title: news.title.rendered ?? '',
+            subTitle: newsData.subTitle,
+            description: newsData.description,
+            thumbnailImage: news.jetpack_featured_media_url,
+            author: news.author.toString(),
+            date: news.date,
+            videoUrl: newsData.videoUrl,
+          ),
         );
       }
 
@@ -35,23 +39,5 @@ class HomeRepositoryImpl extends HomeRepository {
     }, (r) {
       return const Right(defaultFailureMessage);
     });
-  }
-
-  String? extractYouTubeUrl(String htmlContent) {
-    RegExp regex = RegExp(r'<iframe.*?src=["\"](.*?)["\"]');
-
-    Match? match = regex.firstMatch(htmlContent);
-
-    if (match != null) {
-      String? url = match.group(1);
-
-      if (url != null) {
-        if (url.contains('youtube.com') || url.contains('youtu.be')) {
-          return url;
-        }
-      }
-    }
-
-    return null;
   }
 }

@@ -20,9 +20,9 @@ class _DetailsPageState extends State<DetailsPage> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayerController.convertUrlToId(
-              widget.news.videoUrl ?? '') ??
-          '',
+      initialVideoId:
+          YoutubePlayerController.convertUrlToId(widget.news.videoUrl ?? '') ??
+              '',
       params: const YoutubePlayerParams(
         showFullscreenButton: true,
         autoPlay: false,
@@ -110,11 +110,11 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Widget _buildSubTitle() {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Text(
-        '',
-        style: TextStyle(
+        widget.news.subTitle,
+        style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,
           color: Colors.black,
