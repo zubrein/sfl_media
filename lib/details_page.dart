@@ -110,17 +110,20 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Widget _buildSubTitle() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        widget.news.subTitle,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-        ),
-      ),
-    );
+    final subtitle = widget.news.subTitle;
+    return subtitle.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.news.subTitle,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
+            ),
+          )
+        : const SizedBox.shrink();
   }
 
   Widget _buildDescription() {

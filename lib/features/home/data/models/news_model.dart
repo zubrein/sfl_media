@@ -39,12 +39,12 @@ class NewsModel {
 
   static String _processSubTitle(String htmlString) {
     String data = '';
-    RegExp regex = RegExp(r'<h2><strong>(.*?)<\/strong><\/h2>');
+    RegExp regex = RegExp(r'<strong>(.*?)<\/strong>');
 
     Match? match = regex.firstMatch(htmlString);
 
     if (match != null) {
-      return match.group(1) ?? '';
+      return Bidi.stripHtmlIfNeeded(match.group(1) ?? '');
     }
     return data;
   }

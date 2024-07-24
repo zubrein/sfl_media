@@ -71,7 +71,7 @@ class _MyVideoWidgetState extends State<NewsWidget> {
             _buildTitle(),
             _buildVideoPlayer(),
             _buildDateAndAuthor(),
-            _buildDescription(),
+            _buildSubtitle(),
             _buildSeeMoreButton(),
           ],
         ),
@@ -93,11 +93,13 @@ class _MyVideoWidgetState extends State<NewsWidget> {
     );
   }
 
-  Widget _buildDescription() {
+  Widget _buildSubtitle() {
+    final subTitle = widget.news.subTitle;
+    final description = widget.news.description;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        widget.news.description,
+        subTitle.isNotEmpty ? subTitle : description,
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
