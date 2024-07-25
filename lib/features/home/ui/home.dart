@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
-import 'package:sfl_media/category_page.dart';
+import 'package:sfl_media/features/category/ui/category_page.dart';
 import 'package:sfl_media/core/di/dependency_initializer.dart';
 import 'package:sfl_media/features/home/ui/cubit/home_cubit.dart';
+import 'package:sfl_media/utils/alert_dialog_widget.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
 import 'package:sfl_media/features/home/ui/news_widget.dart';
 
@@ -47,7 +48,18 @@ class _HomePageState extends State<HomePage> {
         drawer: _buildDrawer(),
         body: BlocConsumer<HomeCubit, HomeState>(
           bloc: _homeCubit,
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is NewsFetchFailureState) {
+              showError(
+                context: context,
+                message: state.message,
+                onTapRetryButton: () {
+                  Navigator.of(context).pop();
+                  _homeCubit.fetchNews();
+                },
+              );
+            }
+          },
           builder: (context, state) {
             return state is NewsFetchSuccessState
                 ? SafeArea(

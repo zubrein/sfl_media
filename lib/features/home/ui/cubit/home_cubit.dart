@@ -23,8 +23,7 @@ class HomeCubit extends Cubit<HomeState> {
     result.fold((list) {
       emit(NewsFetchSuccessState(list));
     }, (error) {
-      Log.info(error.toString());
-      emit(NewsFetchFailureState());
+      emit(NewsFetchFailureState(error.toString()));
     });
   }
 }

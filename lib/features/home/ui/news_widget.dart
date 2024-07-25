@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sfl_media/details_page.dart';
+import 'package:sfl_media/features/home/ui/details_page.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 

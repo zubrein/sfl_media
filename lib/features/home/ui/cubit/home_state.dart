@@ -21,4 +21,8 @@ class NewsFetchSuccessState extends HomeState {
   List<Object> get props => [newsList];
 }
 
-class NewsFetchFailureState extends HomeState {}
+class NewsFetchFailureState extends HomeState {
+  final String message;
+
+  const NewsFetchFailureState(this.message);
+}

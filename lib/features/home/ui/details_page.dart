@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-import 'features/home/domain/entities/news.dart';
+import '../domain/entities/news.dart';
 
 class DetailsPage extends StatefulWidget {
   final News news;
