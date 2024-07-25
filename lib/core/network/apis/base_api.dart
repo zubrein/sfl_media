@@ -23,7 +23,7 @@ abstract class BaseApi<TRes extends BaseModel> {
       }
       return Left(mapResponse(response.data));
     } on DioException catch (error, stackTrace) {
-      Log.error(defaultFailureMessage, error, stackTrace);
+      Log.error(error.type.toString(), error, stackTrace);
       return Right(mapDioErrorToFailure(error, stackTrace));
     } catch (error, stackTrace) {
       Log.error(defaultFailureMessage, error, stackTrace);
@@ -38,7 +38,8 @@ abstract class BaseApi<TRes extends BaseModel> {
     if (error.type == DioExceptionType.badResponse) {
       return defaultFailureMessage;
     } else if (error.type == DioExceptionType.connectionTimeout ||
-        error.type == DioExceptionType.unknown) {
+        error.type == DioExceptionType.unknown ||
+        error.type == DioExceptionType.connectionError) {
       return networkFailureMessage;
     } else if (error.type == DioExceptionType.receiveTimeout) {
       return 'Receive timeout';
