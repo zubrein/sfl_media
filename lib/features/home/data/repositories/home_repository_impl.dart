@@ -38,8 +38,8 @@ class HomeRepositoryImpl extends HomeRepository {
       }
 
       return Left(newsList);
-    }, (r) {
-      return const Right(defaultFailureMessage);
+    }, (error) {
+      return Right(error);
     });
   }
 }
