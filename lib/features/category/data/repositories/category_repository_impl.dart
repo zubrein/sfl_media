@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sfl_media/core/network/constants/constants.dart';
 import 'package:sfl_media/core/network/constants/typedefs.dart';
 import 'package:sfl_media/features/category/data/api/category_api.dart';
 import 'package:sfl_media/features/category/domain/entities/category.dart';
@@ -22,6 +21,6 @@ class CategoryRepositoryImpl extends CategoryRepository {
         categoryList.add(Category(category.id.toString(), category.name));
       }
       return Left(categoryList);
-    }, (error) => const Right(defaultFailureMessage));
+    }, (error) => Right(error));
   }
 }

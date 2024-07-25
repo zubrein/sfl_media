@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:sfl_media/core/di/dependency_initializer.dart';
+import 'package:sfl_media/features/category/ui/cubit/category_cubit.dart';
+import 'package:sfl_media/utils/alert_dialog_widget.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -9,17 +13,14 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  final List<String> categoryList = [
-    'NEWS',
-    'SPORTS',
-    'INTERVIEWS',
-    'HUMAN RIGHTS',
-    'GET WISE',
-    'SCIENCE',
-    'TECHNOLOGY',
-    'MUSIC',
-    'EVENTS',
-  ];
+  late CategoryCubit _categoryCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _categoryCubit = sl<CategoryCubit>();
+    _categoryCubit.fetchCategory();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +33,29 @@ class _CategoryPageState extends State<CategoryPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTitle(),
-              ..._buildCategoryWidgetList(),
-            ],
+          child: BlocConsumer<CategoryCubit, CategoryState>(
+            bloc: _categoryCubit,
+            listener: (BuildContext context, CategoryState state) {
+              if (state is CategoryFetchFailedState) {
+                showError(
+                    context: context,
+                    message: state.message,
+                    onTapRetryButton: () {
+                      _categoryCubit.fetchCategory();
+                    });
+              }
+            },
+            builder: (context, state) {
+              return state is CategoryFetchSuccessState
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildTitle(),
+                        ..._buildCategoryWidgetList(state),
+                      ],
+                    )
+                  : const SizedBox.shrink();
+            },
           ),
         ),
       ),
@@ -71,11 +89,11 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  List<Widget> _buildCategoryWidgetList() {
+  List<Widget> _buildCategoryWidgetList(CategoryFetchSuccessState state) {
     List<Widget> widgetList = [];
-    for (var category in categoryList) {
+    for (var category in state.categoryList) {
       widgetList.add(_buildCategoryItem(
-          label: category,
+          label: category.name,
           onTap: () {
             Navigator.of(context).pop();
           }));

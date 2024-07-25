@@ -9,7 +9,7 @@ part of 'category_response.dart';
 CategoryResponse _$CategoryResponseFromJson(Map<String, dynamic> json) =>
     CategoryResponse(
       (json['id'] as num).toInt(),
-      json['name'] as String,
+      json['name'] as String? ?? '',
     );
 
 Map<String, dynamic> _$CategoryResponseToJson(CategoryResponse instance) =>

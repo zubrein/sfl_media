@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:sfl_media/core/network/constants/constants.dart';
 import 'package:sfl_media/core/network/constants/typedefs.dart';
 import 'package:sfl_media/features/home/data/api/news_api.dart';
 import 'package:sfl_media/features/home/data/models/news_model.dart';
