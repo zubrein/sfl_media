@@ -14,6 +14,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit(this.fetchCategoryUseCase) : super(CategoryInitial());
 
   Future<void> fetchCategory() async {
+    emit(CategoryFetchInitialState());
     final result = await fetchCategoryUseCase();
     result.fold((categoryList) {
       emit(CategoryFetchSuccessState(categoryList));

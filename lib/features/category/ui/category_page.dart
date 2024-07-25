@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:sfl_media/core/di/dependency_initializer.dart';
 import 'package:sfl_media/features/category/ui/cubit/category_cubit.dart';
 import 'package:sfl_media/utils/alert_dialog_widget.dart';
+import 'package:sfl_media/utils/shimmer_widget.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -37,6 +38,7 @@ class _CategoryPageState extends State<CategoryPage> {
             bloc: _categoryCubit,
             listener: (BuildContext context, CategoryState state) {
               if (state is CategoryFetchFailedState) {
+                Navigator.of(context).pop();
                 showError(
                     context: context,
                     message: state.message,
@@ -54,7 +56,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         ..._buildCategoryWidgetList(state),
                       ],
                     )
-                  : const SizedBox.shrink();
+                  : ShimmerWidget.shimmerCategoryListWidget();
             },
           ),
         ),

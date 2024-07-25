@@ -25,6 +25,28 @@ class ShimmerWidget {
         });
   }
 
+  static Widget shimmerCategoryListWidget() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildBox(20, width: 150),
+          buildBox(20),
+          buildBox(20),
+          buildBox(20),
+          buildBox(20),
+          buildBox(20),
+          buildBox(20),
+          buildBox(20),
+          buildBox(20),
+          buildBox(20),
+          buildBox(20),
+        ],
+      ),
+    );
+  }
+
   static Widget buildBox(double height, {double width = double.infinity}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
