@@ -7,7 +7,7 @@ part 'category_response.g.dart';
 
 @JsonSerializable()
 class CategoryResponse extends BaseModel{
-  final String id;
+  final int id;
   final String name;
 
   CategoryResponse(this.id, this.name);
