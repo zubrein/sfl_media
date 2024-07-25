@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
-import 'package:sfl_media/features/category/ui/category_page.dart';
 import 'package:sfl_media/core/di/dependency_initializer.dart';
+import 'package:sfl_media/features/category/ui/category_page.dart';
 import 'package:sfl_media/features/home/ui/cubit/home_cubit.dart';
+import 'package:sfl_media/features/home/ui/news_widget.dart';
 import 'package:sfl_media/utils/alert_dialog_widget.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
-import 'package:sfl_media/features/home/ui/news_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -101,22 +101,16 @@ class _HomePageState extends State<HomePage> {
     return InkWell(
       onTap: () async {
         setState(() {});
-        await Navigator.push(
+        final categoryId = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const CategoryPage(),
           ),
         );
 
-        if (!context.mounted) return;
-        Navigator.of(context).pop();
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
+        if (categoryId != null) {
+          _homeCubit.fetchNews(category: categoryId[0]);
+        }
       },
       child: const Padding(
         padding: EdgeInsets.only(right: 12.0),
