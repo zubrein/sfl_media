@@ -9,7 +9,7 @@ class FetchCategoryUseCase {
 
   FetchCategoryUseCase({required this.repository});
 
-  AsyncResult<List<Category>> call(String categoryId) async {
+  AsyncResult<List<Category>> call() async {
     return await repository.fetchCategories();
   }
 }
