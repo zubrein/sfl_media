@@ -17,7 +17,9 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   AsyncResult<List<News>> fetchNews(String categoryId) async {
     List<News> newsList = [];
-    final response = await newsApi.get(parameters: {'categories=': categoryId});
+    final response = await newsApi.get(
+      parameters: categoryId.isNotEmpty ? {'categories': categoryId} : null,
+    );
 
     return response.fold((result) {
       for (var news in result.list) {

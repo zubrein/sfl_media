@@ -7,7 +7,9 @@ import 'package:sfl_media/features/home/data/models/news_list_response.dart';
 
 @injectable
 class NewsApi extends BaseApi<NewsListResponse> {
-  NewsApi(Dio dio) : super(Constants.newsUrl, dio);
+  NewsApi(
+    @Named('v2') Dio dio,
+  ) : super(Constants.newsUrl, dio);
 
   @override
   NewsListResponse mapResponse(JsonMap responseJson) =>

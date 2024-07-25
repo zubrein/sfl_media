@@ -43,10 +43,18 @@ extension GetItInjectableX on _i1.GetIt {
       environmentFilter,
     );
     final dioClientProvider = _$DioClientProvider();
-    gh.factory<_i3.Dio>(() => dioClientProvider.dioClientProvider());
+    gh.lazySingleton<_i3.Dio>(
+      () => dioClientProvider.dioClientProviderV1(),
+      instanceName: 'v1',
+    );
+    gh.lazySingleton<_i3.Dio>(
+      () => dioClientProvider.dioClientProviderV2(),
+      instanceName: 'v2',
+    );
     gh.singleton<_i4.Log>(() => _i4.Log());
-    gh.factory<_i5.NewsApi>(() => _i5.NewsApi(gh<_i3.Dio>()));
-    gh.factory<_i6.CategoryApi>(() => _i6.CategoryApi(gh<_i3.Dio>()));
+    gh.factory<_i5.NewsApi>(() => _i5.NewsApi(gh<_i3.Dio>(instanceName: 'v2')));
+    gh.factory<_i6.CategoryApi>(
+        () => _i6.CategoryApi(gh<_i3.Dio>(instanceName: 'v1')));
     gh.factory<_i7.CategoryRepository>(
         () => _i8.CategoryRepositoryImpl(gh<_i6.CategoryApi>()));
     gh.factory<_i9.FetchCategoryUseCase>(() =>
