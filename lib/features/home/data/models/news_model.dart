@@ -3,14 +3,14 @@ import 'package:intl/intl.dart';
 class NewsModel {
   final String subTitle;
   final String description;
-  final String videoUrl;
+  final String? videoUrl;
 
   NewsModel(this.subTitle, this.description, this.videoUrl);
 
   static NewsModel processData(String htmlString) {
     String subTitle = _processSubTitle(htmlString);
     String description = _processDescription(htmlString);
-    String videoUrl = _processVideoUrl(htmlString);
+    String? videoUrl = _processVideoUrl(htmlString);
 
     return NewsModel(subTitle, description, videoUrl);
   }
@@ -19,8 +19,8 @@ class NewsModel {
     return Bidi.stripHtmlIfNeeded(htmlString).trim();
   }
 
-  static String _processVideoUrl(String htmlString) {
-    String data = '';
+  static String? _processVideoUrl(String htmlString) {
+    String? data;
     RegExp regex = RegExp(r'<iframe.*?src=["\"](.*?)["\"]');
 
     Match? match = regex.firstMatch(htmlString);
