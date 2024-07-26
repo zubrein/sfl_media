@@ -10,8 +10,10 @@ class CategoryResponse extends BaseModel{
   final int id;
   @JsonKey(defaultValue: '')
   final String name;
+  @JsonKey(defaultValue: 0)
+  final int count;
 
-  CategoryResponse(this.id, this.name);
+  CategoryResponse(this.id, this.name, this.count);
 
   factory CategoryResponse.fromJson(JsonMap json) {
     return _$CategoryResponseFromJson(json);

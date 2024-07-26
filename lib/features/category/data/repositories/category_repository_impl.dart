@@ -18,7 +18,11 @@ class CategoryRepositoryImpl extends CategoryRepository {
 
     return response.fold((result) {
       for (var category in result.list) {
-        categoryList.add(Category(category.id.toString(), category.name));
+        categoryList.add(Category(
+          category.id.toString(),
+          category.name,
+          category.count,
+        ));
       }
       return Left(categoryList);
     }, (error) => Right(error));

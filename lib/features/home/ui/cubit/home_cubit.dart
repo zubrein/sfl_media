@@ -14,6 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
   final FetchNewsUseCase fetchNewsUseCase;
   int page = 0;
   String categoryId = '';
+  int? postCount;
   List<News> newsList = [];
   YoutubePlayerController? currentYoutubeController;
 
@@ -21,8 +22,13 @@ class HomeCubit extends Cubit<HomeState> {
     this.fetchNewsUseCase,
   ) : super(HomeInitial());
 
-  void fetchNews({bool resetPageCount = false}) async {
-    resetPageCount ? page = 1 : page++;
+  void fetchNews({bool resetPageCount = false, int? postCount}) async {
+    if (resetPageCount) {
+      page = 1;
+      newsList.clear();
+    } else {
+      page++;
+    }
     emit(page == 1 ? NewsFetchInitialState() : MoreNewsFetchingState(newsList));
     final result = await fetchNewsUseCase(page: page, categoryId: categoryId);
     result.fold((list) {

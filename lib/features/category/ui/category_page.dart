@@ -97,7 +97,7 @@ class _CategoryPageState extends State<CategoryPage> {
       widgetList.add(_buildCategoryItem(
           label: category.name,
           onTap: () {
-            Navigator.of(context).pop([category.id]);
+            Navigator.of(context).pop([category]);
           }));
     }
     return widgetList;

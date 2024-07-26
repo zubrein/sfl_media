@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:sfl_media/core/di/dependency_initializer.dart';
+import 'package:sfl_media/features/category/domain/entities/category.dart';
 import 'package:sfl_media/features/category/ui/category_page.dart';
 import 'package:sfl_media/features/home/ui/cubit/home_cubit.dart';
 import 'package:sfl_media/features/home/ui/news_widget.dart';
@@ -26,12 +27,20 @@ class _HomePageState extends State<HomePage> {
     _homeCubit = sl<HomeCubit>();
     _homeCubit.fetchNews();
     _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+    _scrollController.addListener(_onListenScrollController);
+  }
+
+  void _onListenScrollController() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      if (_homeCubit.postCount != null) {
+        if (_homeCubit.newsList.length < _homeCubit.postCount!) {
+          _homeCubit.fetchNews();
+        }
+      } else {
         _homeCubit.fetchNews();
       }
-    });
+    }
   }
 
   @override
@@ -148,7 +157,8 @@ class _HomePageState extends State<HomePage> {
         );
 
         if (categoryId != null) {
-          _homeCubit.categoryId = categoryId[0];
+          _homeCubit.categoryId = (categoryId[0] as Category).id;
+          _homeCubit.postCount = (categoryId[0] as Category).count;
           _homeCubit.fetchNews(resetPageCount: true);
         } else {
           _homeCubit.startPlaying();
