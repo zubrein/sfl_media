@@ -11,16 +11,21 @@ part 'home_state.dart';
 @injectable
 class HomeCubit extends Cubit<HomeState> {
   final FetchNewsUseCase fetchNewsUseCase;
+  int page = 0;
+  String categoryId = '';
+  List<News> newsList = [];
 
   HomeCubit(
     this.fetchNewsUseCase,
   ) : super(HomeInitial());
 
-  void fetchNews({String category = ''}) async {
-    emit(NewsFetchInitialState());
-    final result = await fetchNewsUseCase(category);
+  void fetchNews({bool resetPageCount = false}) async {
+    resetPageCount ? page = 1 : page++;
+    emit(page == 1 ? NewsFetchInitialState() : MoreNewsFetchingState(newsList));
+    final result = await fetchNewsUseCase(page: page, categoryId: categoryId);
     result.fold((list) {
-      emit(NewsFetchSuccessState(list));
+      newsList.addAll(list);
+      emit(NewsFetchSuccessState(newsList));
     }, (error) {
       emit(NewsFetchFailureState(error.toString()));
     });

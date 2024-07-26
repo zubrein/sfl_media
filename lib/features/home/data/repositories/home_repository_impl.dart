@@ -15,10 +15,18 @@ class HomeRepositoryImpl extends HomeRepository {
   HomeRepositoryImpl(this.newsApi);
 
   @override
-  AsyncResult<List<News>> fetchNews(String categoryId) async {
+  AsyncResult<List<News>> fetchNews({
+    required int page,
+    String categoryId = '',
+  }) async {
     List<News> newsList = [];
+    Map<String, dynamic> query = {};
+    query.addAll({'page': page});
+    if (categoryId.isNotEmpty) {
+      query.addAll({'categories': categoryId});
+    }
     final response = await newsApi.get(
-      parameters: categoryId.isNotEmpty ? {'categories': categoryId} : null,
+      parameters: query,
     );
 
     return response.fold((result) {

@@ -18,12 +18,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeCubit _homeCubit;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _homeCubit = sl<HomeCubit>();
     _homeCubit.fetchNews();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _homeCubit.fetchNews();
+      }
+    });
   }
 
   @override
@@ -61,31 +69,51 @@ class _HomePageState extends State<HomePage> {
             }
           },
           builder: (context, state) {
-            return state is NewsFetchSuccessState
+            return state is SuccessState
                 ? SafeArea(
                     child: InViewNotifierList(
+                    controller: _scrollController,
                     scrollDirection: Axis.vertical,
                     initialInViewIds: const ['0'],
                     isInViewPortCondition: _checkViewPortion,
-                    itemCount: state.newsList.length,
+                    itemCount: state.newsList.length + 1,
                     builder: (BuildContext context, int index) {
-                      return InViewNotifierWidget(
-                        id: index.toString(),
-                        builder: (BuildContext context, bool isInView,
-                            Widget? child) {
-                          return NewsWidget(
-                            news: state.newsList[index],
-                            index: index,
-                            isInView: isInView,
-                            key: ObjectKey(state.newsList[index]),
-                          );
-                        },
-                      );
+                      return _buildInViewNotifierWidget(index, state);
                     },
                   ))
                 : ShimmerWidget.shimmerListWidget();
           },
         ));
+  }
+
+  Widget _buildInViewNotifierWidget(int index, SuccessState state) {
+    return InViewNotifierWidget(
+      id: index.toString(),
+      builder: (BuildContext context, bool isInView, Widget? child) {
+        return index == state.newsList.length
+            ? _buildProgressWidget()
+            : _buildNewsWidget(state, index, isInView);
+      },
+    );
+  }
+
+  Widget _buildNewsWidget(SuccessState state, int index, bool isInView) {
+    return NewsWidget(
+      news: state.newsList[index],
+      index: index,
+      isInView: isInView,
+      key: ObjectKey(state.newsList[index]),
+    );
+  }
+
+  Widget _buildProgressWidget() {
+    return const Column(
+      children: [
+        Gap(16),
+        SizedBox(height: 25, width: 25, child: CircularProgressIndicator()),
+        Gap(16),
+      ],
+    );
   }
 
   bool _checkViewPortion(
@@ -109,7 +137,8 @@ class _HomePageState extends State<HomePage> {
         );
 
         if (categoryId != null) {
-          _homeCubit.fetchNews(category: categoryId[0]);
+          _homeCubit.categoryId = categoryId[0];
+          _homeCubit.fetchNews(resetPageCount: true);
         }
       },
       child: const Padding(

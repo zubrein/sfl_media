@@ -10,7 +10,10 @@ class FetchNewsUseCase {
 
   FetchNewsUseCase({required this.repository});
 
-  AsyncResult<List<News>> call(String categoryId) async {
-    return await repository.fetchNews(categoryId);
+  AsyncResult<List<News>> call({
+    required int page,
+    String categoryId = '',
+  }) async {
+    return await repository.fetchNews(page: page, categoryId: categoryId);
   }
 }
