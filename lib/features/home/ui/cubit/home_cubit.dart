@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sfl_media/features/home/domain/entities/news.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import '../../domain/usecases/fetch_news_usecase.dart';
 
@@ -14,6 +15,7 @@ class HomeCubit extends Cubit<HomeState> {
   int page = 0;
   String categoryId = '';
   List<News> newsList = [];
+  YoutubePlayerController? currentYoutubeController;
 
   HomeCubit(
     this.fetchNewsUseCase,
@@ -29,5 +31,17 @@ class HomeCubit extends Cubit<HomeState> {
     }, (error) {
       emit(NewsFetchFailureState(error.toString()));
     });
+  }
+
+  void stopPlaying() {
+    if (currentYoutubeController != null) {
+      currentYoutubeController!.stop();
+    }
+  }
+
+  void startPlaying() {
+    if (currentYoutubeController != null) {
+      currentYoutubeController!.play();
+    }
   }
 }

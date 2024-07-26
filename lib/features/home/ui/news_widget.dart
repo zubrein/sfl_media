@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sfl_media/features/home/ui/cubit/home_cubit.dart';
 import 'package:sfl_media/features/home/ui/details_page.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
@@ -11,12 +12,14 @@ class NewsWidget extends StatefulWidget {
   final bool isInView;
   final News news;
   final int index;
+  final HomeCubit homeCubit;
 
   const NewsWidget({
     Key? key,
     required this.isInView,
     required this.index,
     required this.news,
+    required this.homeCubit,
   }) : super(key: key);
 
   @override
@@ -59,7 +62,12 @@ class _MyVideoWidgetState extends State<NewsWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.news.videoUrl != null) {
-      widget.isInView ? _controller.play() : _controller.stop();
+      if (widget.isInView) {
+        widget.homeCubit.currentYoutubeController = _controller;
+        _controller.play();
+      } else {
+        _controller.stop();
+      }
     }
 
     return Card(

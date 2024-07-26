@@ -103,6 +103,7 @@ class _HomePageState extends State<HomePage> {
       index: index,
       isInView: isInView,
       key: ObjectKey(state.newsList[index]),
+      homeCubit: _homeCubit,
     );
   }
 
@@ -128,7 +129,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildCategoryButton() {
     return InkWell(
       onTap: () async {
-        setState(() {});
+        _homeCubit.stopPlaying();
         final categoryId = await Navigator.push(
           context,
           MaterialPageRoute(
@@ -139,6 +140,8 @@ class _HomePageState extends State<HomePage> {
         if (categoryId != null) {
           _homeCubit.categoryId = categoryId[0];
           _homeCubit.fetchNews(resetPageCount: true);
+        }else{
+          _homeCubit.startPlaying();
         }
       },
       child: const Padding(
