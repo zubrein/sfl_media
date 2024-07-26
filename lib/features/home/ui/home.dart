@@ -42,48 +42,58 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          titleSpacing: 0.0,
-          title: _buildBanner(),
-          backgroundColor: Colors.white,
-          leading: Builder(
-            builder: (context) {
-              return _buildMenuIcon(context);
-            },
-          ),
-          actions: [_buildCategoryButton()],
-        ),
+        appBar: _buildAppBar(),
         drawer: _buildDrawer(),
         body: BlocConsumer<HomeCubit, HomeState>(
           bloc: _homeCubit,
-          listener: (context, state) {
-            if (state is NewsFetchFailureState) {
-              showError(
-                context: context,
-                message: state.message,
-                onTapRetryButton: () {
-                  Navigator.of(context).pop();
-                  _homeCubit.fetchNews();
-                },
-              );
-            }
-          },
+          listener: _onListenHomeCubit,
           builder: (context, state) {
             return state is SuccessState
-                ? SafeArea(
-                    child: InViewNotifierList(
-                    controller: _scrollController,
-                    scrollDirection: Axis.vertical,
-                    initialInViewIds: const ['0'],
-                    isInViewPortCondition: _checkViewPortion,
-                    itemCount: state.newsList.length + 1,
-                    builder: (BuildContext context, int index) {
-                      return _buildInViewNotifierWidget(index, state);
-                    },
-                  ))
+                ? _buildNewsList(state)
                 : ShimmerWidget.shimmerListWidget();
           },
         ));
+  }
+
+  Widget _buildNewsList(SuccessState state) {
+    return SafeArea(
+        child: InViewNotifierList(
+      controller: _scrollController,
+      scrollDirection: Axis.vertical,
+      initialInViewIds: const ['0'],
+      isInViewPortCondition: _checkViewPortion,
+      itemCount: state.newsList.length + 1,
+      builder: (BuildContext context, int index) {
+        return _buildInViewNotifierWidget(index, state);
+      },
+    ));
+  }
+
+  void _onListenHomeCubit(context, state) {
+    if (state is NewsFetchFailureState) {
+      showError(
+        context: context,
+        message: state.message,
+        onTapRetryButton: () {
+          Navigator.of(context).pop();
+          _homeCubit.fetchNews();
+        },
+      );
+    }
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      titleSpacing: 0.0,
+      title: _buildBanner(),
+      backgroundColor: Colors.white,
+      leading: Builder(
+        builder: (context) {
+          return _buildMenuIcon(context);
+        },
+      ),
+      actions: [_buildCategoryButton()],
+    );
   }
 
   Widget _buildInViewNotifierWidget(int index, SuccessState state) {
@@ -140,7 +150,7 @@ class _HomePageState extends State<HomePage> {
         if (categoryId != null) {
           _homeCubit.categoryId = categoryId[0];
           _homeCubit.fetchNews(resetPageCount: true);
-        }else{
+        } else {
           _homeCubit.startPlaying();
         }
       },
