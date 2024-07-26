@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late HomeCubit _homeCubit;
   late ScrollController _scrollController;
+  bool showEndLoader = true;
 
   @override
   void initState() {
@@ -36,6 +37,9 @@ class _HomePageState extends State<HomePage> {
       if (_homeCubit.postCount != null) {
         if (_homeCubit.newsList.length < _homeCubit.postCount!) {
           _homeCubit.fetchNews();
+        } else {
+          showEndLoader = false;
+          setState(() {});
         }
       } else {
         _homeCubit.fetchNews();
@@ -110,7 +114,9 @@ class _HomePageState extends State<HomePage> {
       id: index.toString(),
       builder: (BuildContext context, bool isInView, Widget? child) {
         return index == state.newsList.length
-            ? _buildProgressWidget()
+            ? showEndLoader
+                ? _buildProgressWidget()
+                : const SizedBox.shrink()
             : _buildNewsWidget(state, index, isInView);
       },
     );
