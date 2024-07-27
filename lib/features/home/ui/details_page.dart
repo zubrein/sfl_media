@@ -46,6 +46,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       title: widget.news.title,
                       youtubeUrl: widget.news.videoUrl ?? '',
                       htmlContent: widget.news.description,
+                      thumbnail: widget.news.thumbnailImage,
                     ),
                     mimeType: 'text/html',
                     encoding: Encoding.getByName('utf-8'),
@@ -88,7 +89,6 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void dispose() {
     webViewController?.clearCache();
-    webViewController?.clearFocus();
     super.dispose();
   }
 }

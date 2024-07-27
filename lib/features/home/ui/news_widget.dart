@@ -57,20 +57,20 @@ class _MyVideoWidgetState extends State<NewsWidget> {
         DeviceOrientation.portraitDown,
       ]);
     };
+    if (widget.index == 0) {
+      widget.homeCubit.currentYoutubeController = _controller;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     if (widget.news.videoUrl != null) {
-      _controller.listen((event) {
-        if (event.playerState == PlayerState.playing) {
-          widget.homeCubit.currentYoutubeController = _controller;
-        } else {
-          widget.homeCubit.currentYoutubeController = null;
-        }
-      });
-
-      widget.isInView ? _controller.play() : _controller.stop();
+      if (widget.isInView) {
+        _controller.play();
+        widget.homeCubit.currentYoutubeController = _controller;
+      } else {
+        _controller.stop();
+      }
     }
 
     return Card(

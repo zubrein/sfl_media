@@ -22,6 +22,14 @@ const String cssContent = """
         border: none;
         margin-top: 20px;
     }
+    img                {
+        width: 100%;
+        height: 56.25vw;
+        max-width: 560px;
+        max-height: 315px;
+        border: none;
+        margin-top: 20px;
+    }
     #additionalContent {
         font-family: 'Roboto',Helvetica,Arial,Lucida,sans-serif;
         margin-top: 20px;
@@ -37,7 +45,12 @@ String prepareHtmlContent({
   required String title,
   required String youtubeUrl,
   required String htmlContent,
+  required String thumbnail,
 }) {
+  String mediaContent = youtubeUrl.isNotEmpty
+      ? '<iframe src="$youtubeUrl" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+      : '<img src="$thumbnail" alt="No Video Available" class="placeholder-image" />';
+
   return """
     <!DOCTYPE html>
     <html lang="en">
@@ -52,7 +65,7 @@ String prepareHtmlContent({
     <body>
         <div id="content">
             <h2>$title</h2>
-            <iframe src="$youtubeUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            $mediaContent
             <div id="additionalContent">$htmlContent</div>
         </div>
     </body>
