@@ -106,11 +106,10 @@ class _MyVideoWidgetState extends State<NewsWidget> {
 
   Widget _buildSubtitle() {
     final subTitle = widget.news.subTitle;
-    final description = widget.news.description;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        subTitle.isNotEmpty ? subTitle : description,
+        subTitle,
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
