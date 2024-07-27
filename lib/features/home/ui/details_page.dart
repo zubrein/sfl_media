@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:sfl_media/features/home/ui/html_content.dart';
+import 'package:sfl_media/features/shared/app_bar.dart';
 
 import '../domain/entities/news.dart';
 
@@ -29,11 +30,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0.0,
-        title: _buildBanner(),
-        backgroundColor: Colors.white,
-      ),
+      appBar: SharedAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: load
@@ -71,19 +68,6 @@ class _DetailsPageState extends State<DetailsPage> {
       load = true;
       setState(() {});
     });
-  }
-
-  Widget _buildBanner() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 40.0),
-      child: Center(
-        child: Image.asset(
-          'assets/images/banner_sfl_short.png',
-          height: 40,
-          width: 180,
-        ),
-      ),
-    );
   }
 
   @override

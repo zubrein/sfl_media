@@ -6,6 +6,8 @@ import 'package:sfl_media/features/category/ui/cubit/category_cubit.dart';
 import 'package:sfl_media/utils/alert_dialog_widget.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
 
+import '../../shared/app_bar.dart';
+
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
 
@@ -26,11 +28,7 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0.0,
-        title: _buildBanner(),
-        backgroundColor: Colors.white,
-      ),
+      appBar: SharedAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -73,19 +71,6 @@ class _CategoryPageState extends State<CategoryPage> {
           fontSize: 18,
           fontWeight: FontWeight.w700,
           color: Colors.black,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBanner() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 40.0),
-      child: Center(
-        child: Image.asset(
-          'assets/images/banner_sfl_short.png',
-          height: 40,
-          width: 180,
         ),
       ),
     );

@@ -7,6 +7,8 @@ import 'package:sfl_media/features/category/domain/entities/category.dart';
 import 'package:sfl_media/features/category/ui/category_page.dart';
 import 'package:sfl_media/features/home/ui/cubit/home_cubit.dart';
 import 'package:sfl_media/features/home/ui/news_widget.dart';
+import 'package:sfl_media/features/policies/privacy_policy.dart';
+import 'package:sfl_media/features/policies/terms_of_use.dart';
 import 'package:sfl_media/utils/alert_dialog_widget.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
 
@@ -217,11 +219,27 @@ class _HomePageState extends State<HomePage> {
                 const Gap(16),
                 _buildDrawerItem(
                   'Privacy policy',
-                  () {},
+                  () {
+                    _homeCubit.stopPlaying();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PrivacyPolicy(),
+                      ),
+                    );
+                  },
                 ),
                 _buildDrawerItem(
                   'Terms of Use',
-                  () {},
+                  () {
+                    _homeCubit.stopPlaying();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TermsOfUse(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
