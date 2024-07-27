@@ -69,10 +69,4 @@ class _DetailsPageState extends State<DetailsPage> {
       setState(() {});
     });
   }
-
-  @override
-  void dispose() {
-    webViewController?.clearCache();
-    super.dispose();
-  }
 }

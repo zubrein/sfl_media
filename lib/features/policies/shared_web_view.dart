@@ -76,10 +76,4 @@ class _SharedWebViewState extends State<SharedWebView> {
       setState(() {});
     });
   }
-
-  @override
-  void dispose() {
-    webViewController?.clearCache();
-    super.dispose();
-  }
 }

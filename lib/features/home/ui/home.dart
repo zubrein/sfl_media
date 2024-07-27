@@ -59,14 +59,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: _buildAppBar(),
         drawer: _buildDrawer(),
-        body: BlocConsumer<HomeCubit, HomeState>(
-          bloc: _homeCubit,
-          listener: _onListenHomeCubit,
-          builder: (context, state) {
-            return state is SuccessState
-                ? _buildNewsList(state)
-                : ShimmerWidget.shimmerListWidget();
-          },
+        body: SafeArea(
+          child: BlocConsumer<HomeCubit, HomeState>(
+            bloc: _homeCubit,
+            listener: _onListenHomeCubit,
+            builder: (context, state) {
+              return state is SuccessState
+                  ? _buildNewsList(state)
+                  : ShimmerWidget.shimmerListWidget();
+            },
+          ),
         ));
   }
 
@@ -196,55 +198,45 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildDrawer() {
-    return Drawer(
+    return SafeArea(
+      child: Drawer(
         width: 280,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Gap(16),
-                _buildDrawerTitle('Support Us'),
-                const Gap(16),
-                _buildDrawerItem(
-                  'Share the app link',
-                  () async {},
-                ),
-                _buildDrawerItem(
-                  'Rate us',
-                  () {},
-                ),
-                const Gap(16),
-                _buildDrawerTitle('Policy'),
-                const Gap(16),
-                _buildDrawerItem(
-                  'Privacy policy',
-                  () {
-                    _homeCubit.stopPlaying();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PrivacyPolicy(),
-                      ),
-                    );
-                  },
-                ),
-                _buildDrawerItem(
-                  'Terms of Use',
-                  () {
-                    _homeCubit.stopPlaying();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const TermsOfUse(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Gap(16),
+              _buildDrawerTitle('Policy'),
+              const Gap(16),
+              _buildDrawerItem(
+                'Privacy policy',
+                () {
+                  _homeCubit.stopPlaying();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicy(),
+                    ),
+                  );
+                },
+              ),
+              _buildDrawerItem(
+                'Terms of Use',
+                () {
+                  _homeCubit.stopPlaying();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TermsOfUse(),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Padding _buildDrawerTitle(String title) {
