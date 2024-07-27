@@ -16,7 +16,12 @@ class NewsModel {
   }
 
   static String _processDescription(String htmlString) {
-    return Bidi.stripHtmlIfNeeded(htmlString).trim();
+    // Define the regex pattern to match iframe tags
+    RegExp iframeRegExp = RegExp(r'<iframe[^>]*>.*?</iframe>',
+        multiLine: true, caseSensitive: false);
+
+    // Remove the iframe tags from the HTML content
+    return htmlString.replaceAll(iframeRegExp, '');
   }
 
   static String? _processVideoUrl(String htmlString) {
@@ -44,6 +49,7 @@ class NewsModel {
     Match? match = regex.firstMatch(htmlString);
 
     if (match != null) {
+
       return Bidi.stripHtmlIfNeeded(match.group(1) ?? '');
     }
     return data;

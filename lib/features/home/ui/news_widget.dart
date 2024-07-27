@@ -65,6 +65,8 @@ class _MyVideoWidgetState extends State<NewsWidget> {
       _controller.listen((event) {
         if (event.playerState == PlayerState.playing) {
           widget.homeCubit.currentYoutubeController = _controller;
+        } else {
+          widget.homeCubit.currentYoutubeController = null;
         }
       });
 
