@@ -30,12 +30,13 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: SharedAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: load
             ? Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: InAppWebView(
                   initialUrlRequest: URLRequest(
                       url: Uri.dataFromString(
@@ -44,6 +45,8 @@ class _DetailsPageState extends State<DetailsPage> {
                       youtubeUrl: widget.news.videoUrl ?? '',
                       htmlContent: widget.news.description,
                       thumbnail: widget.news.thumbnailImage,
+                      authorAndDate:
+                          '${widget.news.author} | ${widget.news.date}',
                     ),
                     mimeType: 'text/html',
                     encoding: Encoding.getByName('utf-8'),

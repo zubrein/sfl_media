@@ -1,7 +1,7 @@
 const String cssContent = """
 
     body {
-        font-family: sans-serif;
+        font-family: 'Roboto',Helvetica,Arial,Lucida,sans-serif;
         margin: 0;
         padding: 0;
         display: flex;
@@ -30,12 +30,17 @@ const String cssContent = """
         margin-top: 20px;
     }
     #additionalContent {
-        font-family: 'Roboto',Helvetica,Arial,Lucida,sans-serif;
         margin-top: 20px;
         padding-right: 5px;
-        width: 100%;
+        width: 97%;
         text-align: justify;
         font-size: 14px;
+    }
+    #author {
+        color: #FF8000;
+        margin-top: 0px;
+        text-align: left;
+        font-size: 12px;
     }
 
 """;
@@ -45,6 +50,7 @@ String prepareHtmlContent({
   required String youtubeUrl,
   required String htmlContent,
   required String thumbnail,
+  required String authorAndDate,
 }) {
   String mediaContent = youtubeUrl.isNotEmpty
       ? '<iframe src="$youtubeUrl" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
@@ -65,6 +71,7 @@ String prepareHtmlContent({
         <div id="content">
             <h2>$title</h2>
             $mediaContent
+            <div id=author><strong><p>$authorAndDate</p></strong></div>
             <div id="additionalContent">$htmlContent</div>
         </div>
     </body>
