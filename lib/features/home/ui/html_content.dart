@@ -11,7 +11,6 @@ const String cssContent = """
     }
     h2 {
         color: #333;
-        margin-top: 20px;
         font-size: 16px;
     }
     iframe {
