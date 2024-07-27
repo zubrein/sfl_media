@@ -62,12 +62,13 @@ class _MyVideoWidgetState extends State<NewsWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.news.videoUrl != null) {
-      if (widget.isInView) {
-        widget.homeCubit.currentYoutubeController = _controller;
-        _controller.play();
-      } else {
-        _controller.stop();
-      }
+      _controller.listen((event) {
+        if (event.playerState == PlayerState.playing) {
+          widget.homeCubit.currentYoutubeController = _controller;
+        }
+      });
+
+      widget.isInView ? _controller.play() : _controller.stop();
     }
 
     return Card(
