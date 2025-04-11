@@ -7,38 +7,28 @@ part of 'news_response.dart';
 // **************************************************************************
 
 NewsResponse _$NewsResponseFromJson(Map<String, dynamic> json) => NewsResponse(
-      (json['id'] as num).toInt(),
+      json['title'] as String,
+      json['content'] as String,
+      Author.fromJson(json['author'] as Map<String, dynamic>),
       json['date'] as String,
-      json['link'] as String,
-      Title.fromJson(json['title'] as Map<String, dynamic>),
-      (json['author'] as num).toInt(),
-      Content.fromJson(json['content'] as Map<String, dynamic>),
-      json['jetpack_featured_media_url'] as String,
+      json['youtube_video_code'] as String,
+      json['thumbnail'] as String,
     );
 
 Map<String, dynamic> _$NewsResponseToJson(NewsResponse instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'title': instance.title,
+      'content': instance.content,
       'author': instance.author,
       'date': instance.date,
-      'title': instance.title,
-      'jetpack_featured_media_url': instance.jetpack_featured_media_url,
-      'content': instance.content,
-      'link': instance.link,
+      'youtube_video_code': instance.youtube_video_code,
+      'thumbnail': instance.thumbnail,
     };
 
-Title _$TitleFromJson(Map<String, dynamic> json) => Title(
-      json['rendered'] as String?,
+Author _$AuthorFromJson(Map<String, dynamic> json) => Author(
+      json['name'] as String?,
     );
 
-Map<String, dynamic> _$TitleToJson(Title instance) => <String, dynamic>{
-      'rendered': instance.rendered,
-    };
-
-Content _$ContentFromJson(Map<String, dynamic> json) => Content(
-      json['rendered'] as String?,
-    );
-
-Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
-      'rendered': instance.rendered,
+Map<String, dynamic> _$AuthorToJson(Author instance) => <String, dynamic>{
+      'name': instance.name,
     };

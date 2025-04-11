@@ -9,7 +9,7 @@ import '../models/category_list_response.dart';
 @injectable
 class CategoryApi extends BaseApi<CategoryListResponse> {
   CategoryApi(
-    @Named('v1') Dio dio,
+    @Named('v2') Dio dio,
   ) : super(Constants.categoriesUrl, dio);
 
   @override

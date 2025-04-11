@@ -31,17 +31,17 @@ class HomeRepositoryImpl extends HomeRepository {
 
     return response.fold((result) {
       for (var news in result.list) {
-        final newsData = NewsModel.processData(news.content.rendered ?? '');
+        final newsData = NewsModel.processData(news.title, news.content);
 
         newsList.add(
           News(
-            title: news.title.rendered ?? '',
+            title: newsData.title,
             subTitle: newsData.subTitle,
             description: newsData.description,
-            thumbnailImage: news.jetpack_featured_media_url,
-            author: authors[news.author] ?? '',
+            thumbnailImage: news.thumbnail,
+            author: news.author.name ?? '',
             date: formattedDate(news.date),
-            videoUrl: newsData.videoUrl,
+            videoUrl: news.youtube_video_code,
           ),
         );
       }

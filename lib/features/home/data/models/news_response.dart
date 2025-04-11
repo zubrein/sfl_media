@@ -6,21 +6,20 @@ part 'news_response.g.dart';
 
 @JsonSerializable()
 class NewsResponse extends BaseModel {
-  final int id;
-  final int author;
+  final String title;
+  final String content;
+  final Author author;
   final String date;
-  final Title title;
-  final String jetpack_featured_media_url;
-  final Content content;
-  final String link;
+  final String youtube_video_code;
+  final String thumbnail;
 
   NewsResponse(
-    this.id,
-    this.date,
-    this.link,
     this.title,
+    this.content,
     this.author,
-    this.content, this.jetpack_featured_media_url,
+    this.date,
+    this.youtube_video_code,
+    this.thumbnail,
   );
 
   factory NewsResponse.fromJson(JsonMap json) {
@@ -32,29 +31,15 @@ class NewsResponse extends BaseModel {
 }
 
 @JsonSerializable()
-class Title extends BaseModel {
-  final String? rendered;
+class Author extends BaseModel {
+  final String? name;
 
-  Title(this.rendered);
+  Author(this.name);
 
-  factory Title.fromJson(JsonMap json) {
-    return _$TitleFromJson(json);
+  factory Author.fromJson(JsonMap json) {
+    return _$AuthorFromJson(json);
   }
 
   @override
-  JsonMap toJson() => _$TitleToJson(this);
-}
-
-@JsonSerializable()
-class Content extends BaseModel {
-  final String? rendered;
-
-  Content(this.rendered);
-
-  factory Content.fromJson(JsonMap json) {
-    return _$ContentFromJson(json);
-  }
-
-  @override
-  JsonMap toJson() => _$ContentToJson(this);
+  JsonMap toJson() => _$AuthorToJson(this);
 }

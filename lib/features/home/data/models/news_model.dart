@@ -1,45 +1,30 @@
-import 'package:intl/intl.dart';
+import 'package:html_unescape/html_unescape.dart';
 
 class NewsModel {
+  final String title;
   final String subTitle;
   final String description;
-  final String? videoUrl;
 
-  NewsModel(this.subTitle, this.description, this.videoUrl);
+  NewsModel(this.title, this.subTitle, this.description);
 
-  static NewsModel processData(String htmlString) {
+  static NewsModel processData(String htmlTitle, String htmlString) {
+    String title = _processTitle(htmlTitle);
     String subTitle = _processSubTitle(htmlString);
     String description = _processDescription(htmlString);
-    String? videoUrl = _processVideoUrl(htmlString);
 
-    return NewsModel(subTitle, description, videoUrl);
+    return NewsModel(title, subTitle, description);
   }
 
   static String _processDescription(String htmlString) {
     // Define the regex pattern to match iframe tags
-    RegExp iframeRegExp = RegExp(r'<iframe[^>]*>.*?</iframe>',
-        multiLine: true, caseSensitive: false);
+    RegExp iframeRegExp = RegExp(r'<iframe[^>]*>.*?</iframe>', multiLine: true, caseSensitive: false);
 
     // Remove the iframe tags from the HTML content
     return htmlString.replaceAll(iframeRegExp, '');
   }
 
-  static String? _processVideoUrl(String htmlString) {
-    String? data;
-    RegExp regex = RegExp(r'<iframe.*?src=["\"](.*?)["\"]');
-
-    Match? match = regex.firstMatch(htmlString);
-
-    if (match != null) {
-      String? url = match.group(1);
-
-      if (url != null) {
-        if (url.contains('youtube.com') || url.contains('youtu.be')) {
-          return url;
-        }
-      }
-    }
-    return data;
+  static String _processTitle(String htmlString) {
+    return HtmlUnescape().convert(htmlString);
   }
 
   static String _processSubTitle(String htmlString) {
@@ -49,8 +34,7 @@ class NewsModel {
     Match? match = regex.firstMatch(htmlString);
 
     if (match != null) {
-
-      return Bidi.stripHtmlIfNeeded(match.group(1) ?? '');
+      return HtmlUnescape().convert(match.group(1) ?? '');
     }
     return data;
   }
