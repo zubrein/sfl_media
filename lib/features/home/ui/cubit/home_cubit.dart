@@ -14,8 +14,8 @@ class HomeCubit extends Cubit<HomeState> {
   final FetchNewsUseCase fetchNewsUseCase;
   int page = 0;
   String categoryId = '';
-  int? postCount;
   List<News> newsList = [];
+  bool postFetchedEnd = false;
   YoutubePlayerController? currentYoutubeController;
 
   HomeCubit(
@@ -32,6 +32,11 @@ class HomeCubit extends Cubit<HomeState> {
     emit(page == 1 ? NewsFetchInitialState() : MoreNewsFetchingState(newsList));
     final result = await fetchNewsUseCase(page: page, categoryId: categoryId != 'all' ? categoryId : '');
     result.fold((list) {
+      if (list.length == 10) {
+        postFetchedEnd = false;
+      } else {
+        postFetchedEnd = true;
+      }
       newsList.addAll(list);
       emit(NewsFetchSuccessState(newsList));
     }, (error) {

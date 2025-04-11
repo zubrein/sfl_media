@@ -22,7 +22,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late HomeCubit _homeCubit;
   late ScrollController _scrollController;
-  bool showEndLoader = true;
 
   @override
   void initState() {
@@ -35,15 +34,10 @@ class _HomePageState extends State<HomePage> {
 
   void _onListenScrollController() {
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-      if (_homeCubit.postCount != null) {
-        if (_homeCubit.newsList.length < _homeCubit.postCount!) {
-          _homeCubit.fetchNews();
-        } else {
-          showEndLoader = false;
-          setState(() {});
-        }
-      } else {
+      if (!_homeCubit.postFetchedEnd) {
         _homeCubit.fetchNews();
+      } else {
+        setState(() {});
       }
     }
   }
@@ -115,7 +109,7 @@ class _HomePageState extends State<HomePage> {
       id: index.toString(),
       builder: (BuildContext context, bool isInView, Widget? child) {
         return index == state.newsList.length
-            ? showEndLoader
+            ? !_homeCubit.postFetchedEnd
                 ? _buildProgressWidget()
                 : const SizedBox.shrink()
             : _buildNewsWidget(state, index, isInView);
@@ -164,7 +158,6 @@ class _HomePageState extends State<HomePage> {
 
         if (category != null) {
           _homeCubit.categoryId = (category[0] as Category).id;
-          _homeCubit.postCount = (category[0] as Category).count;
           _homeCubit.fetchNews(resetPageCount: true);
         } else if ((category[0] as Category).id == 'all') {
           _homeCubit.fetchNews(resetPageCount: true);
