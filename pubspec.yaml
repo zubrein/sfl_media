@@ -30,7 +30,7 @@ dependencies:
   json_annotation: ^4.9.0
   shimmer: ^3.0.0
   cached_network_image: ^3.3.1
-  html:
+  html: ^0.15.5+1
   flutter_inappwebview:
   html_unescape: ^2.0.0
 

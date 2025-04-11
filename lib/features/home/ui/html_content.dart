@@ -53,7 +53,7 @@ String prepareHtmlContent({
   required String authorAndDate,
 }) {
   String mediaContent = youtubeUrl.isNotEmpty
-      ? '<iframe src="$youtubeUrl" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+      ? '<iframe src="${youtubeUrl.replaceFirst("watch?v=", "embed/")}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
       : '<img src="$thumbnail" alt="No Video Available" class="placeholder-image" />';
 
   return """

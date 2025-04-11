@@ -33,9 +33,7 @@ class _MyVideoWidgetState extends State<NewsWidget> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId:
-          YoutubePlayerController.convertUrlToId(widget.news.videoUrl ?? '') ??
-              '',
+      initialVideoId: YoutubePlayerController.convertUrlToId(widget.news.videoUrl ?? '') ?? '',
       params: YoutubePlayerParams(
         showFullscreenButton: true,
         autoPlay: widget.index == 0 ? true : false,
@@ -115,8 +113,6 @@ class _MyVideoWidgetState extends State<NewsWidget> {
           fontWeight: FontWeight.w400,
           color: Colors.black,
         ),
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
       ),
     );
   }

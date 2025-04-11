@@ -1,4 +1,5 @@
 import 'package:html_unescape/html_unescape.dart';
+import 'package:html/parser.dart' as html;
 
 class NewsModel {
   final String title;
@@ -27,15 +28,13 @@ class NewsModel {
     return HtmlUnescape().convert(htmlString);
   }
 
+  static String truncateTo20Words(String text) {
+    List<String> words = text.split(' ');
+    if (words.length <= 17) return text;
+    return words.sublist(0, 17).join(' ');
+  }
+
   static String _processSubTitle(String htmlString) {
-    String data = '';
-    RegExp regex = RegExp(r'<strong>(.*?)<\/strong>');
-
-    Match? match = regex.firstMatch(htmlString);
-
-    if (match != null) {
-      return HtmlUnescape().convert(match.group(1) ?? '');
-    }
-    return data;
+    return truncateTo20Words(html.parse(htmlString).body?.text.replaceAll(RegExp(r'[\n\r]+'), ' ').trim() ?? '');
   }
 }
