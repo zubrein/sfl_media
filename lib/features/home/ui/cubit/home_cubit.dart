@@ -30,7 +30,7 @@ class HomeCubit extends Cubit<HomeState> {
       page++;
     }
     emit(page == 1 ? NewsFetchInitialState() : MoreNewsFetchingState(newsList));
-    final result = await fetchNewsUseCase(page: page, categoryId: categoryId);
+    final result = await fetchNewsUseCase(page: page, categoryId: categoryId != 'all' ? categoryId : '');
     result.fold((list) {
       newsList.addAll(list);
       emit(NewsFetchSuccessState(newsList));

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:sfl_media/core/di/dependency_initializer.dart';
+import 'package:sfl_media/features/category/domain/entities/category.dart';
 import 'package:sfl_media/features/category/ui/cubit/category_cubit.dart';
 import 'package:sfl_media/utils/alert_dialog_widget.dart';
 import 'package:sfl_media/utils/shimmer_widget.dart';
@@ -78,6 +79,11 @@ class _CategoryPageState extends State<CategoryPage> {
 
   List<Widget> _buildCategoryWidgetList(CategoryFetchSuccessState state) {
     List<Widget> widgetList = [];
+    widgetList.add(_buildCategoryItem(
+        label: 'All',
+        onTap: () {
+          Navigator.of(context).pop([Category('all', '', 0)]);
+        }));
     for (var category in state.categoryList) {
       widgetList.add(_buildCategoryItem(
           label: category.name,
@@ -105,8 +111,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 const Gap(8),
                 Text(
                   label,
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
                 const Expanded(child: SizedBox.shrink()),
                 Image.asset(

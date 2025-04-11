@@ -34,8 +34,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onListenScrollController() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
       if (_homeCubit.postCount != null) {
         if (_homeCubit.newsList.length < _homeCubit.postCount!) {
           _homeCubit.fetchNews();
@@ -64,9 +63,7 @@ class _HomePageState extends State<HomePage> {
             bloc: _homeCubit,
             listener: _onListenHomeCubit,
             builder: (context, state) {
-              return state is SuccessState
-                  ? _buildNewsList(state)
-                  : ShimmerWidget.shimmerListWidget();
+              return state is SuccessState ? _buildNewsList(state) : ShimmerWidget.shimmerListWidget();
             },
           ),
         ));
@@ -151,24 +148,25 @@ class _HomePageState extends State<HomePage> {
     double deltaBottom,
     double viewPortDimension,
   ) {
-    return deltaTop < (0.5 * viewPortDimension) &&
-        deltaBottom > (0.5 * viewPortDimension);
+    return deltaTop < (0.5 * viewPortDimension) && deltaBottom > (0.5 * viewPortDimension);
   }
 
   Widget _buildCategoryButton() {
     return InkWell(
       onTap: () async {
         _homeCubit.stopPlaying();
-        final categoryId = await Navigator.push(
+        final category = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const CategoryPage(),
           ),
         );
 
-        if (categoryId != null) {
-          _homeCubit.categoryId = (categoryId[0] as Category).id;
-          _homeCubit.postCount = (categoryId[0] as Category).count;
+        if (category != null) {
+          _homeCubit.categoryId = (category[0] as Category).id;
+          _homeCubit.postCount = (category[0] as Category).count;
+          _homeCubit.fetchNews(resetPageCount: true);
+        } else if ((category[0] as Category).id == 'all') {
           _homeCubit.fetchNews(resetPageCount: true);
         } else {
           _homeCubit.startPlaying();
@@ -270,8 +268,7 @@ class _HomePageState extends State<HomePage> {
                 const Gap(8),
                 Text(
                   label,
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
                 const Expanded(child: SizedBox.shrink()),
                 Image.asset(
